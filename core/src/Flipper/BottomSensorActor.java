@@ -4,16 +4,19 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 import hu.csanyzeg.master.MyBaseClasses.Box2dWorld.Box2DWorldHelper;
-import hu.csanyzeg.master.MyBaseClasses.Box2dWorld.Box2dStage;
 import hu.csanyzeg.master.MyBaseClasses.Box2dWorld.MyFixtureDef;
 import hu.csanyzeg.master.MyBaseClasses.Box2dWorld.ShapeType;
 import hu.csanyzeg.master.MyBaseClasses.Game.MyGame;
 import hu.csanyzeg.master.MyBaseClasses.Scene2D.OneSpriteStaticActor;
-public class KatapultActor extends BaseHitboxActor {
+
+public class BottomSensorActor extends OneSpriteStaticActor {
     World world;
-    public KatapultActor(Box2dStage stage, MyFixtureDef fixtureDef, BodyDef.BodyType bodyType, float width, float height) {
-        super(stage, "Flipper/katapult.png", "katapult", new MyFixtureDef(), BodyDef.BodyType.StaticBody, 20, 20);
-        setPosition(135,65);
-        setRotation(65);
+    Box2DWorldHelper box2DWorldHelper;
+    public BottomSensorActor(MyGame game, World world, float w, float h, float x, float y) {
+        super(game, "badlogic.jpg");
+        setSize(w,h);
+        setPosition(x,y);
+        setVisible(false);
+        setActorWorldHelper(new Box2DWorldHelper(world,this, ShapeType.Rectangle, new MyFixtureDef(), BodyDef.BodyType.StaticBody));
     }
 }

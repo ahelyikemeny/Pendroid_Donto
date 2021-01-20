@@ -19,15 +19,90 @@ public class FlipperInGameStage extends Box2dStage {
 
         addActor(new BgActor(this));
         addActor(new KatapultActor(this, new MyFixtureDef(), BodyDef.BodyType.StaticBody, 30,30 ));
-        addActor(new GyorsitoActor(this, new MyFixtureDef(), BodyDef.BodyType.StaticBody, 50, 50));
+        addActor(new KatapultActor2(this, new MyFixtureDef(), BodyDef.BodyType.StaticBody, 30,30));
         addActor(new FlipperutoActor(this, new MyFixtureDef(), BodyDef.BodyType.StaticBody, 30, 30));
         addActor(new FlipperutoActor2(this, new MyFixtureDef(), BodyDef.BodyType.StaticBody, 30, 30));
-
-        SensorActor sensorActor = new SensorActor(game, world, 15,5,145,75);
+        addActor(new GyorsitoActor(this, new MyFixtureDef(), BodyDef.BodyType.StaticBody, 30, 30));
+        SensorActor sensorActor = new SensorActor(game, world, 10,5,145,70);
         sensorActor.setRotation(65);
         addActor(sensorActor);
-        BallActor ballActor = new BallActor(game, world, 5,5,140,80);
+        SensorActor2 sensorActor2 = new SensorActor2(game, world, 10, 5, 0, 70);
+        sensorActor2.setRotation(-65);
+        addActor(sensorActor2);
+        BallActor ballActor = new BallActor(game, world, 5,5,9,85);
         addActor(ballActor);
+        BottomSensorActor bottomSensorActor = new BottomSensorActor(game, world,200,15,0,0);
+        addActor(bottomSensorActor);
+
+        getHelper(bottomSensorActor).addContactListener(new MyContactListener() {
+            @Override
+            public void beginContact(Contact contact, Box2DWorldHelper myHelper, Box2DWorldHelper otherHelper) {
+                if (otherHelper.getActor() instanceof BallActor){
+                    otherHelper.getActor().setPosition(60,50);
+
+                    otherHelper.invoke(new Runnable() {
+                        @Override
+                        public void run() {
+                            otherHelper.getBody().setLinearVelocity(0,10);
+                            otherHelper.getBody().setAngularVelocity(0);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void endContact(Contact contact, Box2DWorldHelper myHelper, Box2DWorldHelper otherHelper) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Box2DWorldHelper myHelper, Box2DWorldHelper otherHelper) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, Box2DWorldHelper myHelper, Box2DWorldHelper otherHelper) {
+
+            }
+        });
+
+
+
+
+        getHelper(sensorActor2).addContactListener(new MyContactListener() {
+            @Override
+            public void beginContact(Contact contact, Box2DWorldHelper myHelper, Box2DWorldHelper otherHelper) {
+                if (otherHelper.getActor() instanceof BallActor){
+
+                    otherHelper.invoke(new Runnable() {
+                        @Override
+                        public void run() {
+                            otherHelper.getBody().setLinearVelocity(0,100);
+                            otherHelper.getBody().setAngularVelocity(0);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void endContact(Contact contact, Box2DWorldHelper myHelper, Box2DWorldHelper otherHelper) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Box2DWorldHelper myHelper, Box2DWorldHelper otherHelper) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, Box2DWorldHelper myHelper, Box2DWorldHelper otherHelper) {
+
+            }
+        });
+
+
+
+
         getHelper(sensorActor).addContactListener(new MyContactListener() {
             @Override
             public void beginContact(Contact contact, Box2DWorldHelper myHelper, Box2DWorldHelper otherHelper) {
