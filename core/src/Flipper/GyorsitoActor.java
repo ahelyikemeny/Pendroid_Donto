@@ -12,7 +12,7 @@ import hu.csanyzeg.master.MyBaseClasses.Scene2D.OneSpriteStaticActor;
 
 public class GyorsitoActor extends BaseHitboxActor {
     public GyorsitoActor(Box2dStage stage, MyFixtureDef fixtureDef, BodyDef.BodyType bodyType, float width, float height) {
-        super(stage, "Flipper/Gyorsito.png", "gyorsito", new MyFixtureDef(), BodyDef.BodyType.StaticBody, 50, 50);
+        super(stage, "Flipper/Gyorsito.png", "gyorsito", new MyFixtureDef(), BodyDef.BodyType.StaticBody, 30, 30);
         setPosition(50,20);
     }
 }
