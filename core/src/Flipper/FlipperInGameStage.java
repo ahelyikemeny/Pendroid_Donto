@@ -1,5 +1,6 @@
 package Flipper;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -33,6 +34,7 @@ public class FlipperInGameStage extends Box2dStage {
     }
     public FlipperInGameStage(MyGame game) {
         super(new ExtendViewport(90,160), game);
+        setCameraResetToCenterOfScreen();
         addBackButtonScreenBackByStackPopListener();
         setLoader("Flipper/hitboxes");
         addActor(new BgActor(this));
@@ -66,7 +68,7 @@ public class FlipperInGameStage extends Box2dStage {
             public void beginContact(Contact contact, Box2DWorldHelper myHelper, Box2DWorldHelper otherHelper) {
                 if (otherHelper.getActor() instanceof BallActor){
                     otherHelper.getActor().setPosition(60,50);
-                    setLife(getLife() - 3);
+                    setLife(getLife() - 1);
                     lifeCounter.setText((getLife()));
                     otherHelper.invoke(new Runnable() {
                         @Override
@@ -105,7 +107,7 @@ public class FlipperInGameStage extends Box2dStage {
                     otherHelper.invoke(new Runnable() {
                         @Override
                         public void run() {
-                            otherHelper.getBody().setLinearVelocity(0,100);
+                            otherHelper.getBody().setLinearVelocity(new Vector2(otherHelper.getBody().getLinearVelocity().x + 30, otherHelper.getBody().getLinearVelocity().y + 60));
                             otherHelper.getBody().setAngularVelocity(0);
                         }
                     });
